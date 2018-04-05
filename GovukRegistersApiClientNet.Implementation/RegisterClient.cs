@@ -1,15 +1,12 @@
 ﻿using GovukRegistersApiClientNet.Enums;
+using GovukRegistersApiClientNet.Implementation.Interfaces;
 using GovukRegistersApiClientNet.Interfaces;
 using GovukRegistersApiClientNet.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace GovukRegistersApiClientNet
+namespace GovukRegistersApiClientNet.Implementation
 {
     public class RegisterClient : IRegisterClient
     {
@@ -32,46 +29,46 @@ namespace GovukRegistersApiClientNet
             _rsfUpdateService = rsfUpdateService;
         }
 
-        public Entry GetEntry(int entryNumber)
+        public IEntry GetEntry(int entryNumber)
         {
             return _dataStore.GetEntry(EntryType.User, entryNumber);
         }
 
-        public IEnumerable<Entry> GetEntries()
+        public IEnumerable<IEntry> GetEntries()
         {
             return _dataStore.GetEntries(EntryType.User);
         }
 
-        public Item GetItem(string itemHash)
+        public IItem GetItem(string itemHash)
         {
             return _dataStore.GetItem(itemHash);
         }
 
-        public IEnumerable<Item> GetItems()
+        public IEnumerable<IItem> GetItems()
         {
             return _dataStore.GetItems();
         }
 
-        public Record GetRecord(string key)
+        public IRecord GetRecord(string key)
         {
             return _dataStore.GetRecord(EntryType.User, key);
         }
 
-        public IEnumerable<Record> GetRecords()
+        public IEnumerable<IRecord> GetRecords()
         {
             return _dataStore.GetRecords(EntryType.User);
         }
 
-        public IEnumerable<Record> GetCurrentRecords()
+        public IEnumerable<IRecord> GetCurrentRecords()
         {
             return GetRecords().ToList()
-                .Where(r => !r.GetItem().Json.ContainsKey("end-date"));
+                .Where(r => !r.GetItem().GetData().ContainsKey("end-date"));
         }
 
-        public IEnumerable<Record> GetExpiredRecords()
+        public IEnumerable<IRecord> GetExpiredRecords()
         {
             return GetRecords().ToList()
-                .Where(r => r.GetItem().Json.ContainsKey("end-date"));
+                .Where(r => r.GetItem().GetData().ContainsKey("end-date"));
         }
 
         public async Task RefreshData()

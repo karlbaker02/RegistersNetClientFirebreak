@@ -1,12 +1,10 @@
 ﻿using GovukRegistersApiClientNet.Enums;
-using GovukRegistersApiClientNet.Interfaces;
+using GovukRegistersApiClientNet.Implementation.Interfaces;
 using GovukRegistersApiClientNet.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace GovukRegistersApiClientNet
+namespace GovukRegistersApiClientNet.Implementation
 {
     public class InMemoryDataStore : IDataStore
     {
@@ -31,13 +29,13 @@ namespace GovukRegistersApiClientNet
 
         public void AddItem(Item item)
         {
-            _items.Add(item.Hash, item);
+            _items.Add(item.GetItemHash(), item);
         }
 
         public void AppendEntry(Entry entry)
         {
-            _entries[entry.EntryType].Add(entry.EntryNumber, entry);
-            _recordEntryMappings[entry.EntryType][entry.Key] = entry.EntryNumber;
+            _entries[entry.GetEntryType()].Add(entry.GetEntryNumber(), entry);
+            _recordEntryMappings[entry.GetEntryType()][entry.GetKey()] = entry.GetEntryNumber();
         }
 
         public Entry GetEntry(string entryType, int entryNumber)
@@ -78,7 +76,7 @@ namespace GovukRegistersApiClientNet
         public Record GetRecord(string entryType, int entryNumber)
         {
             var entry = _entries[entryType][entryNumber];
-            return new Record(_items[entry.ItemHash], entry);
+            return new Record(_items[entry.GetItemHash()], entry);
         }
 
         public IEnumerable<Record> GetRecords(string entryType)

@@ -6,15 +6,15 @@ namespace GovukRegistersApiClientNet.Interfaces
 {
     public interface IRegisterClient
     {
-        Entry GetEntry(int entryNumber);
-        IEnumerable<Entry> GetEntries();
+        IEntry GetEntry(int entryNumber);
+        IEnumerable<IEntry> GetEntries();
 
-        Item GetItem(string itemHash);
-        IEnumerable<Item> GetItems();
+        IItem GetItem(string itemHash);
+        IEnumerable<IItem> GetItems();
 
-        Record GetRecord(string key);
-        IEnumerable<Record> GetRecords();
-        IEnumerable<Record> GetCurrentRecords();
-        IEnumerable<Record> GetExpiredRecords();
+        IRecord GetRecord(string key);
+        IEnumerable<IRecord> GetRecords();
+        IEnumerable<IRecord> GetCurrentRecords();
+        IEnumerable<IRecord> GetExpiredRecords();
     }
 }

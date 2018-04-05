@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GovukRegistersApiClientNet.Interfaces
+namespace GovukRegistersApiClientNet.Implementation.Interfaces
 {
     public interface IRsfDownloadService
     {

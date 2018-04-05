@@ -1,9 +1,7 @@
-﻿using GovukRegistersApiClientNet.Enums;
-using GovukRegistersApiClientNet.Models;
-using System.Collections;
+﻿using GovukRegistersApiClientNet.Models;
 using System.Collections.Generic;
 
-namespace GovukRegistersApiClientNet.Interfaces
+namespace GovukRegistersApiClientNet.Implementation.Interfaces
 {
     public interface IDataStore
     {

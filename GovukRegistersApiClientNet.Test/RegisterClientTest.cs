@@ -3,9 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GovukRegistersApiClientNet.Models;
 using System.Linq;
 using GovukRegistersApiClientNet.Enums;
-using System.Threading.Tasks;
 using System;
-using GovukRegistersApiClientNet.Services;
+using GovukRegistersApiClientNet.Implementation;
+using GovukRegistersApiClientNet.Implementation.Services;
 
 namespace GovukRegistersApiClientNet.Test
 {

@@ -1,12 +1,10 @@
 ﻿using GovukRegistersApiClientNet.Enums;
-using GovukRegistersApiClientNet.Interfaces;
+using GovukRegistersApiClientNet.Implementation.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace GovukRegistersApiClientNet.Services
+namespace GovukRegistersApiClientNet.Implementation.Services
 {
     public class RsfDownloadService : IRsfDownloadService
     {

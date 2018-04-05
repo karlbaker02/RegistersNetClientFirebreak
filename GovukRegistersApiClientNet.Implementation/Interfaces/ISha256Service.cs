@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GovukRegistersApiClientNet.Interfaces
+namespace GovukRegistersApiClientNet.Implementation.Interfaces
 {
     public interface ISha256Service
     {

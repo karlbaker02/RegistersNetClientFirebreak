@@ -1,22 +1,22 @@
 ﻿namespace GovukRegistersApiClientNet.Models
 {
-    public class Record
+    public class Record : IRecord
     {
-        private readonly Item _item;
-        private readonly Entry _entry;
+        private readonly IItem _item;
+        private readonly IEntry _entry;
 
-        public Record(Item item, Entry entry)
+        public Record(IItem item, IEntry entry)
         {
             _item = item;
             _entry = entry;
         }
 
-        public Item GetItem()
+        public IItem GetItem()
         {
             return _item;
         }
 
-        public Entry GetEntry()
+        public IEntry GetEntry()
         {
             return _entry;
         }

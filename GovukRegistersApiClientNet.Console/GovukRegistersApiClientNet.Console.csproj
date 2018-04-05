@@ -57,6 +57,10 @@
       <Project>{52ddb8ed-b500-47a6-82b5-867db1a89c3f}</Project>
       <Name>GovukRegistersApiClientNet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GovukRegistersApiClientNet.Implementation\GovukRegistersApiClientNet.Implementation.csproj">
+      <Project>{8fd7a95b-eac4-437d-b493-4092b129415b}</Project>
+      <Name>GovukRegistersApiClientNet.Implementation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

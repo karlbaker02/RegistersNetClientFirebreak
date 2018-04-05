@@ -1,10 +1,8 @@
-﻿using GovukRegistersApiClientNet.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using GovukRegistersApiClientNet.Implementation.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace GovukRegistersApiClientNet.Services
+namespace GovukRegistersApiClientNet.Implementation.Services
 {
     public class Sha256Service : ISha256Service
     {

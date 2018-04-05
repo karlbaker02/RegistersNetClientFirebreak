@@ -1,11 +1,10 @@
 ﻿using GovukRegistersApiClientNet.Enums;
-using GovukRegistersApiClientNet.Interfaces;
+using GovukRegistersApiClientNet.Implementation.Interfaces;
 using GovukRegistersApiClientNet.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace GovukRegistersApiClientNet.Services
+namespace GovukRegistersApiClientNet.Implementation.Services
 {
     public class RsfUpdateService : IRsfUpdateService
     {
