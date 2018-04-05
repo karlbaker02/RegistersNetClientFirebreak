@@ -1,4 +1,5 @@
-﻿using GovukRegistersApiClientNet.Services;
+﻿using GovukRegistersApiClientNet.Factories;
+using GovukRegistersApiClientNet.Services;
 using System;
 
 namespace GovukRegistersApiClientNet.ConsoleApp
@@ -7,7 +8,7 @@ namespace GovukRegistersApiClientNet.ConsoleApp
     {
         public static void Main(string[] args)
         {
-            var client = RegisterClient.CreateAsync("country", Enums.Phase.ReadyToUse, new InMemoryDataStore(), new RsfDownloadService(), new RsfUpdateService(new Sha256Service())).GetAwaiter().GetResult();
+            var client = RegisterClientFactory.CreateRegisterClientAsync("country", Enums.Phase.ReadyToUse, new InMemoryDataStore(), new RsfDownloadService(), new RsfUpdateService(new Sha256Service())).GetAwaiter().GetResult();
             var records = client.GetRecords();
 
             Console.WriteLine(records);

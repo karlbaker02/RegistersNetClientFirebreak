@@ -32,19 +32,6 @@ namespace GovukRegistersApiClientNet
             _rsfUpdateService = rsfUpdateService;
         }
 
-        private async Task<RegisterClient> InitializeAsync()
-        {
-            await RefreshData();
-            return this;
-        }
-
-        public static Task<RegisterClient> CreateAsync(string register, Phase phase, IDataStore dataStore, IRsfDownloadService rsfDownloadService, IRsfUpdateService rsfUpdateService)
-        {
-            var instance = new RegisterClient(register, phase, dataStore, rsfDownloadService, rsfUpdateService);
-
-            return instance.InitializeAsync();
-        }
-
         public Entry GetEntry(int entryNumber)
         {
             return _dataStore.GetEntry(EntryType.User, entryNumber);
