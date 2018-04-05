@@ -3,6 +3,7 @@ using GovukRegistersApiClientNet.Interfaces;
 using GovukRegistersApiClientNet.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,30 +16,53 @@ namespace GovukRegistersApiClientNet
         private readonly string _register;
         private readonly Phase _phase;
         private readonly IDataStore _dataStore;
-        private readonly HttpClient _httpClient;
-        private readonly SHA256Managed _sha256;
-        private readonly Dictionary<string, Record> _records;
+        private readonly IRsfDownloadService _rsfDownloadService;
+        private readonly IRsfUpdateService _rsfUpdateService;
 
-        public RegisterClient(string register, Phase phase, IDataStore dataStore)
+        public RegisterClient(string register, 
+            Phase phase, 
+            IDataStore dataStore, 
+            IRsfDownloadService rsfDownloadService, 
+            IRsfUpdateService rsfUpdateService)
         {
             _register = register;
             _phase = phase;
             _dataStore = dataStore;
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri($"https://{register}.{(phase == Phase.ReadyToUse ? "register.gov.uk" : "alpha.openregister.org")}/")
-            };
-            _sha256 = new SHA256Managed();
-            _records = new Dictionary<string, Record>();
-
-            var rsf = DownloadRsf().GetAwaiter().GetResult();
-            ParseRsf(rsf);
-            Console.WriteLine(rsf);
+            _rsfDownloadService = rsfDownloadService;
+            _rsfUpdateService = rsfUpdateService;
         }
 
-        public async Task<IEnumerable<Entry>> GetEntries()
+        private async Task<RegisterClient> InitializeAsync()
         {
-            return null;
+            await RefreshData();
+            return this;
+        }
+
+        public static Task<RegisterClient> CreateAsync(string register, Phase phase, IDataStore dataStore, IRsfDownloadService rsfDownloadService, IRsfUpdateService rsfUpdateService)
+        {
+            var instance = new RegisterClient(register, phase, dataStore, rsfDownloadService, rsfUpdateService);
+
+            return instance.InitializeAsync();
+        }
+
+        public Entry GetEntry(int entryNumber)
+        {
+            return _dataStore.GetEntry(EntryType.User, entryNumber);
+        }
+
+        public IEnumerable<Entry> GetEntries()
+        {
+            return _dataStore.GetEntries(EntryType.User);
+        }
+
+        public Item GetItem(string itemHash)
+        {
+            return _dataStore.GetItem(itemHash);
+        }
+
+        public IEnumerable<Item> GetItems()
+        {
+            return _dataStore.GetItems();
         }
 
         public Record GetRecord(string key)
@@ -51,57 +75,24 @@ namespace GovukRegistersApiClientNet
             return _dataStore.GetRecords(EntryType.User);
         }
 
-        public async Task<string> DownloadRsf()
+        public IEnumerable<Record> GetCurrentRecords()
         {
-            return await _httpClient.GetStringAsync("download-rsf");
+            return GetRecords().ToList()
+                .Where(r => !r.GetItem().Json.ContainsKey("end-date"));
         }
 
-        public void ParseRsf(string rsf)
+        public IEnumerable<Record> GetExpiredRecords()
         {
-            var rsfLines = rsf.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            var entryNumbers = new Dictionary<string, int>
-            {
-                { "user", 1 },
-                { "system", 1 }
-            };
-
-            foreach (var line in rsfLines)
-            {
-                var components = line.Split('\t');
-                var commandType = components[0];
-
-                if (commandType == "add-item")
-                {
-                    var json = components[1];
-                    var hash = $"sha-256:{ ComputeSha256Hash(json).ToLower() }";
-
-                    _dataStore.AddItem(new Item(hash, json));
-                }
-                else if (commandType == "append-entry")
-                {
-                    var entryType = components[1];
-                    var key = components[2];
-                    var timestamp = DateTime.Parse(components[3]);
-                    var itemHash = components[4];
-                    var entryNumber = entryNumbers[entryType]++;
-
-                    _dataStore.AppendEntry(new Entry(entryNumber, entryType, key, itemHash, timestamp));
-                }
-            }
+            return GetRecords().ToList()
+                .Where(r => r.GetItem().Json.ContainsKey("end-date"));
         }
 
-        private string ComputeSha256Hash(string input)
+        public async Task RefreshData()
         {
-            var sb = new StringBuilder();
+            var latestEntryNumber = _dataStore.GetLatestEntryNumber(EntryType.User);
+            var updateRsf = await _rsfDownloadService.Download(_register, _phase, latestEntryNumber);
 
-            foreach (byte b in _sha256.ComputeHash(Encoding.UTF8.GetBytes(input)))
-            {
-                sb.Append(b.ToString("X2"));
-            }
-
-            return sb.ToString();
+            _rsfUpdateService.UpdateData(updateRsf, _dataStore);
         }
-
-        
     }
 }
