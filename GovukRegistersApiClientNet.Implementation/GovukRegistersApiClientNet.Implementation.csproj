@@ -2,10 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Karl Baker</Authors>
+    <Company>Government Digital Service</Company>
+    <Description>.NET Client Library implementation package for interacting with GOV.UK Registers.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\govuk-registers-api-client-net\GovukRegistersApiClientNet.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GovukRegistersApiClientNet\GovukRegistersApiClientNet.csproj" />
   </ItemGroup>
 
 </Project>

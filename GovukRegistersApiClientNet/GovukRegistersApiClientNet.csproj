@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Karl Baker</Authors>
+    <Company>Government Digital Service</Company>
+    <Description>.NET Client Library interface package for interacting with GOV.UK Registers.</Description>
+    <PackageProjectUrl>https://registers.cloudapps.digital</PackageProjectUrl>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>

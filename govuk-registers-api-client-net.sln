@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GovukRegistersApiClientNet", "govuk-registers-api-client-net\GovukRegistersApiClientNet.csproj", "{52DDB8ED-B500-47A6-82B5-867DB1A89C3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GovukRegistersApiClientNet", "GovukRegistersApiClientNet\GovukRegistersApiClientNet.csproj", "{52DDB8ED-B500-47A6-82B5-867DB1A89C3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GovukRegistersApiClientNet.Test", "GovukRegistersApiClientNet.Test\GovukRegistersApiClientNet.Test.csproj", "{40FF14C1-0A99-43D2-B391-9B1061629C39}"
 EndProject

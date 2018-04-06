@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>GovukRegistersApiClientNet</id>
+    <version>1.0.0</version>
+    <title>GovukRegistersApiClientNet</title>
+    <authors>Karl Baker</authors>
+    <projectUrl>https://registers.cloudapps.digital</projectUrl>
+    <description>.NET Client Library interface package for interacting with GOV.UK Registers.</description>
+    <releaseNotes>Initial Release.</releaseNotes>
+    <tags>GOV.UK, Registers</tags>
+  </metadata>
+</package>

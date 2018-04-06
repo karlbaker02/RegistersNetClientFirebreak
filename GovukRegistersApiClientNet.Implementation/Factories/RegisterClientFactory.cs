@@ -4,16 +4,23 @@ using System.Threading.Tasks;
 
 namespace GovukRegistersApiClientNet.Implementation.Factories
 {
-    public class RegisterClientFactory
+    public class RegisterClientFactory : IRegisterClientFactory
     {
-        public static Task<RegisterClient> CreateRegisterClientAsync(
+        private readonly IRsfDownloadService _rsfDownloadService;
+        private readonly IRsfUpdateService _rsfUpdateService;
+
+        public RegisterClientFactory(IRsfDownloadService rsfDownloadService, IRsfUpdateService rsfUpdateService)
+        {
+            _rsfDownloadService = rsfDownloadService;
+            _rsfUpdateService = rsfUpdateService;
+        }
+
+        public Task<RegisterClient> CreateRegisterClientAsync(
             string register,
             Phase phase,
-            IDataStore dataStore,
-            IRsfDownloadService rsfDownloadService,
-            IRsfUpdateService rsfUpdateService)
+            IDataStore dataStore)
         {
-            var client = new RegisterClient(register, phase, dataStore, rsfDownloadService, rsfUpdateService);
+            var client = new RegisterClient(register, phase, dataStore, _rsfDownloadService, _rsfUpdateService);
             return InitializeAsync(client);
         }
 

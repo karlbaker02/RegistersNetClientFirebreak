@@ -1,26 +1,34 @@
 ﻿using GovukRegistersApiClientNet.Implementation;
 using GovukRegistersApiClientNet.Implementation.Factories;
+using GovukRegistersApiClientNet.Implementation.Interfaces;
 using GovukRegistersApiClientNet.Implementation.Services;
-using System;
-using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GovukRegistersApiClientNet.ConsoleApp
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            var client = RegisterClientFactory.CreateRegisterClientAsync("country", Enums.Phase.ReadyToUse, new InMemoryDataStore(), new RsfDownloadService(), new Implementation.Services.RsfUpdateService(new Sha256Service())).GetAwaiter().GetResult();
-            var records = client.GetRecords().ToList();
+            var services = new ServiceCollection();
+            ConfigureServices(services);
 
-            foreach (var record in records)
-            {
-                var entry = record.Entry;
-                var itemData = record.Item.Data;
-                Console.WriteLine($"{entry.EntryNumber} {entry.Key} {itemData["name"]}");
-            }
+            var provider = services.BuildServiceProvider();
 
-            Console.ReadLine();
+            var factory = provider.GetService<IRegisterClientFactory>();
+            var registerClient = factory.CreateRegisterClientAsync("country", Enums.Phase.ReadyToUse, new InMemoryDataStore()).GetAwaiter().GetResult();
+            var countryRegisterTestService = new CountryRegisterTestService(registerClient);
+
+            countryRegisterTestService.PrintCountryData();
+        }
+
+        public static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSingleton<IDataStore, InMemoryDataStore>();
+            services.AddSingleton<IRsfDownloadService, RsfDownloadService>();
+            services.AddSingleton<IRsfUpdateService, RsfUpdateService>();
+            services.AddSingleton<ISha256Service, Sha256Service>();
+            services.AddSingleton<IRegisterClientFactory, RegisterClientFactory>();
         }
     }
 }
