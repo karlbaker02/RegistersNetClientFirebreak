@@ -15,9 +15,9 @@ namespace GovukRegistersApiClientNet.ConsoleApp
 
             foreach (var record in records)
             {
-                var entry = record.GetEntry();
-                var itemData = record.GetItem().GetData();
-                Console.WriteLine($"{entry.GetEntryNumber()} {entry.GetKey()} {itemData["name"]}");
+                var entry = record.Entry;
+                var itemData = record.Item.Data;
+                Console.WriteLine($"{entry.EntryNumber} {entry.Key} {itemData["name"]}");
             }
 
             Console.ReadLine();

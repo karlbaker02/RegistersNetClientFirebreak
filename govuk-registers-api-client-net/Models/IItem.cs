@@ -4,7 +4,7 @@ namespace GovukRegistersApiClientNet.Models
 {
     public interface IItem
     {
-        string GetItemHash();
-        Dictionary<string, dynamic> GetData();
+        string Hash { get; }
+        Dictionary<string, dynamic> Data { get; }
     }
 }

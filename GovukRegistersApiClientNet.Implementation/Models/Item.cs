@@ -5,16 +5,13 @@ namespace GovukRegistersApiClientNet.Models
 {
     public class Item : IItem
     {
-        private readonly string _hash;
-        private readonly Dictionary<string, dynamic> _json;
+        public string Hash { get; set; }
+        public Dictionary<string, dynamic> Data { get; set; }
 
         public Item(string hash, string json)
         {
-            _hash = hash;
-            _json = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
+            Hash = hash;
+            Data = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
         }
-
-        public string GetItemHash() => _hash;
-        public Dictionary<string, dynamic> GetData() => _json;
     }
 }

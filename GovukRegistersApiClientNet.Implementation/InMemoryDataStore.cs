@@ -29,13 +29,13 @@ namespace GovukRegistersApiClientNet.Implementation
 
         public void AddItem(Item item)
         {
-            _items.Add(item.GetItemHash(), item);
+            _items.Add(item.Hash, item);
         }
 
         public void AppendEntry(Entry entry)
         {
-            _entries[entry.GetEntryType()].Add(entry.GetEntryNumber(), entry);
-            _recordEntryMappings[entry.GetEntryType()][entry.GetKey()] = entry.GetEntryNumber();
+            _entries[entry.EntryType].Add(entry.EntryNumber, entry);
+            _recordEntryMappings[entry.EntryType][entry.Key] = entry.EntryNumber;
         }
 
         public Entry GetEntry(string entryType, int entryNumber)
@@ -76,7 +76,7 @@ namespace GovukRegistersApiClientNet.Implementation
         public Record GetRecord(string entryType, int entryNumber)
         {
             var entry = _entries[entryType][entryNumber];
-            return new Record(_items[entry.GetItemHash()], entry);
+            return new Record(_items[entry.ItemHash], entry);
         }
 
         public IEnumerable<Record> GetRecords(string entryType)

@@ -62,13 +62,13 @@ namespace GovukRegistersApiClientNet.Implementation
         public IEnumerable<IRecord> GetCurrentRecords()
         {
             return GetRecords().ToList()
-                .Where(r => !r.GetItem().GetData().ContainsKey("end-date"));
+                .Where(r => !r.Item.Data.ContainsKey("end-date"));
         }
 
         public IEnumerable<IRecord> GetExpiredRecords()
         {
             return GetRecords().ToList()
-                .Where(r => r.GetItem().GetData().ContainsKey("end-date"));
+                .Where(r => r.Item.Data.ContainsKey("end-date"));
         }
 
         public async Task RefreshData()

@@ -2,7 +2,7 @@
 {
     public interface IRecord
     {
-        IItem GetItem();
-        IEntry GetEntry();
+        IItem Item { get; }
+        IEntry Entry { get; }
     }
 }
