@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>GovukRegistersApiClientNet.Implementation</id>
-    <version>1.0.0</version>
+    <version>$version$</version>
     <title>GovukRegistersApiClientNet.Implementation</title>
     <authors>Karl Baker</authors>
     <projectUrl>https://registers.cloudapps.digital</projectUrl>
