@@ -42,7 +42,7 @@ namespace GovukRegistersApiClientNet.Implementation.Services
                     var key = components[2];
                     var timestamp = DateTime.Parse(components[3]);
                     var itemHash = components[4];
-                    var entryNumber = entryNumbers[entryType]++;
+                    var entryNumber = ++entryNumbers[entryType];
 
                     dataStore.AppendEntry(new Entry(entryNumber, entryType, key, itemHash, timestamp));
                 }
