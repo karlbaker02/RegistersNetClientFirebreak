@@ -5,6 +5,6 @@ namespace GovukRegistersApiClientNet.Models
     public interface IItem
     {
         string Hash { get; }
-        Dictionary<string, dynamic> Data { get; }
+        dynamic Data { get; }
     }
 }

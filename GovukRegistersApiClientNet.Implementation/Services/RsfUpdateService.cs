@@ -10,11 +10,11 @@ namespace GovukRegistersApiClientNet.Implementation.Services
 {
     public class RsfUpdateService : IRsfUpdateService
     {
-        private readonly ISha256Service _sha256Service;
+        private readonly IItemFactory _itemFactory;
 
-        public RsfUpdateService(ISha256Service sha256Service)
+        public RsfUpdateService(IItemFactory itemFactory)
         {
-            _sha256Service = sha256Service;
+            _itemFactory = itemFactory;
         }
 
         public void UpdateData(string rsf, IDataStore dataStore)
@@ -29,7 +29,7 @@ namespace GovukRegistersApiClientNet.Implementation.Services
 
             var commandHandlers = new Dictionary<string, IRsfCommandHandler>
             {
-                { "add-item", new AddItemCommandHandler(_sha256Service) },
+                { "add-item", new AddItemCommandHandler(_itemFactory) },
                 { "append-entry", new AppendEntryCommandHandler(entryNumbers) },
                 { "assert-root-hash", new AssertRootHashCommandHandler() }
             };

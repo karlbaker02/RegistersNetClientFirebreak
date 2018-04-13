@@ -6,6 +6,8 @@ using GovukRegistersApiClientNet.Enums;
 using System;
 using GovukRegistersApiClientNet.Implementation;
 using GovukRegistersApiClientNet.Implementation.Services;
+using GovukRegistersApiClientNet.Implementation.Factories;
+using GovukRegistersApiClientNet.Implementation.Helpers;
 
 namespace GovukRegistersApiClientNet.Test
 {
@@ -16,7 +18,8 @@ namespace GovukRegistersApiClientNet.Test
 
         public RegisterClientTest()
         {
-            Client = new RegisterClient("country", Phase.ReadyToUse, new InMemoryDataStore(), new RsfDownloadService(), new RsfUpdateService(new Sha256Service()));
+            var sha256Service = new Sha256Service();
+            Client = new RegisterClient("country", Phase.ReadyToUse, new InMemoryDataStore(), new RsfDownloadService(), new RsfUpdateService(new ItemFactory(sha256Service, new DashToUnderscoreJsonConverter())));
         }
 
         [TestMethod]

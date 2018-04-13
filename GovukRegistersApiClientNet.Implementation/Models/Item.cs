@@ -1,17 +1,14 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-
-namespace GovukRegistersApiClientNet.Models
+﻿namespace GovukRegistersApiClientNet.Models
 {
     public class Item : IItem
     {
         public string Hash { get; set; }
-        public Dictionary<string, dynamic> Data { get; set; }
+        public dynamic Data { get; set; }
 
-        public Item(string hash, string json)
+        public Item(string hash, dynamic data)
         {
             Hash = hash;
-            Data = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
+            Data = data;
         }
     }
 }

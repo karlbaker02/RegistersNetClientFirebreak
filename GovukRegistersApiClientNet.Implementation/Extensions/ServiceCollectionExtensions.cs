@@ -1,7 +1,9 @@
 ﻿using GovukRegistersApiClientNet.Implementation.Factories;
+using GovukRegistersApiClientNet.Implementation.Helpers;
 using GovukRegistersApiClientNet.Implementation.Interfaces;
 using GovukRegistersApiClientNet.Implementation.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +18,9 @@ namespace GovukRegistersApiClientNet.Implementation.Extensions
                 .AddSingleton<IRsfDownloadService, RsfDownloadService>()
                 .AddSingleton<IRsfUpdateService, RsfUpdateService>()
                 .AddSingleton<ISha256Service, Sha256Service>()
-                .AddSingleton<IRegisterClientFactory, RegisterClientFactory>();
+                .AddSingleton<IRegisterClientFactory, RegisterClientFactory>()
+                .AddSingleton<IItemFactory, ItemFactory>()
+                .AddSingleton<JsonConverter, DashToUnderscoreJsonConverter>();
 
             return services;
         }

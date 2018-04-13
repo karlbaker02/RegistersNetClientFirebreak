@@ -8,11 +8,11 @@ namespace GovukRegistersApiClientNet.Implementation.Commands
 {
     public class AddItemCommandHandler : IRsfCommandHandler
     {
-        private readonly ISha256Service _sha256Service;
+        private readonly IItemFactory _itemFactory;
 
-        public AddItemCommandHandler(ISha256Service sha256Service)
+        public AddItemCommandHandler(IItemFactory itemFactory)
         {
-            _sha256Service = sha256Service;
+            _itemFactory = itemFactory;
         }
 
         public string GetName()
@@ -23,9 +23,8 @@ namespace GovukRegistersApiClientNet.Implementation.Commands
         public void Parse(string[] rsfComponents, IDataStore dataStore)
         {
             var json = rsfComponents[1];
-            var hash = $"sha-256:{ _sha256Service.ComputeSha256Hash(json).ToLower() }";
 
-            dataStore.AddItem(new Item(hash, json));
+            dataStore.AddItem(_itemFactory.CreateItem(json));
         }
     }
 }
